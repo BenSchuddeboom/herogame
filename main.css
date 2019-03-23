@@ -73,7 +73,7 @@ h2 {
     transition: .3s all;
 }
 
-#dagger {
+#dagger, #cannon {
     width: 100px;
     height: 100px;
 }
