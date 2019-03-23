@@ -73,11 +73,22 @@ h2 {
     transition: .3s all;
 }
 
+#dagger {
+    width: 100px;
+    height: 100px;
+}
+
 ul {
     list-style: none;
     margin: 10px;
     font-size: 150%;
     color: #333;
+}
+
+#startGame {
+    width: 100px;
+    height: 50px;
+    margin: 10px;
 }
 
 form {
