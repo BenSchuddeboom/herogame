@@ -7,7 +7,8 @@ const hero = {
     weapon: {
         type: "Teddy",
         damage: 2,
-    }
+    },
+    alive: true,
 }
 
 const enemy = {
@@ -19,9 +20,10 @@ const enemy = {
     },
     weapon: {
         type: "Breath",
-        damage: 3,
+        damage: 1,
     },
-    alive: true,
+    alive: false,
+    speed: 300,
 }
 
 const dagger = {
@@ -43,6 +45,8 @@ function rest(hObj) {
 function pickUpItem(hObj, weapon) {
     hObj.inventory.push(weapon);
     displayHeroStats(hero);
+    const dagger = document.getElementById('dagger');
+    dagger.remove();
 }
 
 function equipWeapon(hObj) {
@@ -79,16 +83,19 @@ function displayEnemyStats(eObj) {
     const name = eObj.name;
     const health = eObj.health.current;
     const healthMax = eObj.health.max;
+    const speed = eObj.speed;
 
     const weaponLi = document.getElementById('enemyWeapon');
     const damageLi = document.getElementById('enemyDamage');
     const nameLi = document.getElementById('enemyName');
     const healthLi = document.getElementById('enemyHealth');
+    const speedLi = document.getElementById('enemySpeed');
 
     weaponLi.innerText = "Weapon: " + weaponType;
     damageLi.innerText = "Damage: " + weaponDamage;
     nameLi.innerText = "Name: " + name;
     healthLi.innerText = "Health: " + health;
+    speedLi.innerText = "Attacks/second: " + speed/100;
 
     const healthbar = document.querySelector('.enemyHealth');
     currentHealthPerc = (health/healthMax)*100;
@@ -106,7 +113,7 @@ function changeHeroName(hObj) {
 }
 
 function doDamage(target, dealer) {
-    if(target.health.current > 0) {   
+    if(target.health.current > 0 && dealer.health > 0 && target.alive) {   
         target.health.current = target.health.current - dealer.weapon.damage;
         displayEnemyStats(enemy);
     } else if(target.health.current === 0 && target.alive === true) {
@@ -116,16 +123,8 @@ function doDamage(target, dealer) {
 }
 
 function enemyDies() {
-    const weaponLi = document.getElementById('enemyWeapon');
-    const damageLi = document.getElementById('enemyDamage');
-    const nameLi = document.getElementById('enemyName');
-    const healthLi = document.getElementById('enemyHealth');
-
-    weaponLi.innerText = ""
-    damageLi.innerText = ""
-    nameLi.innerText = ""
-    healthLi.innerText = ""
-    
+    window.clearInterval();
+    removeEnemyStats();
     const enemyStats = document.getElementById('enemyStats');
     const deadText = document.createElement('li');
     deadText.id = "deadText"
@@ -134,7 +133,66 @@ function enemyDies() {
 
 }
 
+function removeHeroStats() {
+    const weaponLi = document.getElementById('heroWeapon');
+    const damageLi = document.getElementById('heroDamage');
+    const nameLi = document.getElementById('heroName');
+    const healthLi = document.getElementById('heroHealth');
 
+    weaponLi.innerText = ""
+    damageLi.innerText = ""
+    nameLi.innerText = ""
+    healthLi.innerText = ""
+}
+
+function removeEnemyStats() {
+    const weaponLi = document.getElementById('enemyWeapon');
+    const damageLi = document.getElementById('enemyDamage');
+    const nameLi = document.getElementById('enemyName');
+    const healthLi = document.getElementById('enemyHealth');
+    const speedLi = document.getElementById('enemySpeed');
+
+    weaponLi.innerText = ""
+    damageLi.innerText = ""
+    nameLi.innerText = ""
+    healthLi.innerText = ""
+    speedLi.innerText = ""
+}
+
+function enemyDamage(eObj) {
+    if(hero.health > 0 && enemy.alive) {
+        hero.health = hero.health - eObj.weapon.damage
+        displayHeroStats(hero);
+    } else if(hero.alive === true && hero.health <= 0) {
+        hero.alive = false;
+        heroDies();
+    }
+}
+
+function heroDies() {
+    window.clearInterval();
+    removeHeroStats() 
+    const heroStats = document.getElementById('heroStats');
+    const deadText = document.createElement('li');
+    deadText.id = "deadText"
+    deadText.innerText = "DEAD"
+    heroStats.appendChild(deadText);
+}
 
 displayEnemyStats(enemy);
 displayHeroStats(hero);
+
+let running = false;
+
+function startGame() {
+    if(!running) {
+        running = true;
+        enemy.alive = true;
+        setInterval(function() {
+            enemyDamage(enemy);
+        }, enemy.speed);
+    } else {
+        alert("game already running")
+    }
+}
+

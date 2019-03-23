@@ -14,8 +14,7 @@
   <div id="UI">
     <img id="inn" onclick="rest(hero)" src="images/inn.png">
     <img id="bag" onclick="equipWeapon(hero)" src="images/bag.png">  
-  </div>
-
+  </div> 
   <div id="hero">
     <h2>HERO</h2>
     <ul id="heroStats">
@@ -37,6 +36,7 @@
       <li id="enemyHealth"></li>
       <li id="enemyWeapon"></li>
       <li id="enemyDamage"></li>
+      <li id="enemySpeed"></li>
     </ul>
     <div class="healthbar">
       <div class="enemyHealth">
@@ -44,8 +44,10 @@
     </div>
     <img src="images/herofaces/enemy1.jpg" onclick="doDamage(enemy, hero)">
   </div>
-  <!-- <img id="dagger" onclick="pickUpItem(hero, dagger)" src="images/dagger.png"> -->
+  <img id="dagger" onclick="pickUpItem(hero, dagger)" src="images/dagger.png">
 </div>
+
+<button id="startGame" onclick="startGame()">START GAME</button>
 
 <form id="nameChange">
   Rename your hero: <br>
