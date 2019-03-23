@@ -33,3 +33,7 @@ function equipWeapon(hObj) {
         hObj.weapon = hObj.inventory[0];
     }
 }
+
+function displayStats {
+
+}

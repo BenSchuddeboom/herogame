@@ -2,15 +2,35 @@
 <head>
     <meta charset="utf-8">
     <title>Mocha Tests</title>
+    <link href="main.css" rel="stylesheet" type="text/css">
     <link href="lib/mocha.css" rel="stylesheet" />
 </head>
 <body>
 
-  <!-- 👍 YOUR HTML HERE 👍 -->
-<img id="inn" onclick="rest(hero)" src="images/inn.png">
-<img id="dagger" onclick="pickUpItem(hero, dagger)" src="images/dagger.png">
-<img id="bag" onclick="equipWeapon(hero)" src="images/bag.png">
+<!-- 👍 YOUR HTML HERE 👍 -->
 
+<div id="container">
+  <div id="UI">
+    <img id="inn" onclick="rest(hero)" src="images/inn.png">
+    <img id="bag" onclick="equipWeapon(hero)" src="images/bag.png">  
+  </div>
+
+  <div id="hero">
+      <div class="healthbar">
+          <div class="heroHealth">
+          </div>
+        </div>
+    <img src="images/herofaces/bean1.jpg">
+  </div>
+  <div class="enemy">
+    <div class="healthbar">
+      <div class="enemyHealth">
+      </div>
+    </div>
+    <img src="images/herofaces/enemy1.jpg">
+  </div>
+  <!-- <img id="dagger" onclick="pickUpItem(hero, dagger)" src="images/dagger.png"> -->
+</div>
 
 
 
