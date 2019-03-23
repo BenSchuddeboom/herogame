@@ -21,11 +21,13 @@ const enemy = {
         type: "Breath",
         damage: 3,
     },
+    alive: true,
 }
 
 const dagger = {
     type: "dagger",
     damage: 2,
+    imageUrl: "images/dagger.png",
 }
 
 function rest(hObj) {
@@ -106,9 +108,30 @@ function changeHeroName(hObj) {
 function doDamage(target, dealer) {
     if(target.health.current > 0) {   
         target.health.current = target.health.current - dealer.weapon.damage;
+        displayEnemyStats(enemy);
+    } else if(target.health.current === 0 && target.alive === true) {
+        target.alive = false;
+        enemyDies();
     }
-    displayEnemyStats(enemy);
-    displayHeroStats(hero);
+}
+
+function enemyDies() {
+    const weaponLi = document.getElementById('enemyWeapon');
+    const damageLi = document.getElementById('enemyDamage');
+    const nameLi = document.getElementById('enemyName');
+    const healthLi = document.getElementById('enemyHealth');
+
+    weaponLi.innerText = ""
+    damageLi.innerText = ""
+    nameLi.innerText = ""
+    healthLi.innerText = ""
+    
+    const enemyStats = document.getElementById('enemyStats');
+    const deadText = document.createElement('li');
+    deadText.id = "deadText"
+    deadText.innerText = "DEAD"
+    enemyStats.appendChild(deadText);
+
 }
 
 
