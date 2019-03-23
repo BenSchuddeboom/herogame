@@ -11,8 +11,7 @@ const hero = {
     alive: true,
 }
 
-//Declaring enemy object.
-
+//Collection of enemies, could easily be added to for a longer battle.
 const enemies = 
 [
     {
@@ -59,6 +58,7 @@ const enemies =
     }
 ]
 
+//Grabs a single enemy.
 let enemy = getEnemy(enemies);
 
 //Declaring dagger object.
@@ -68,10 +68,11 @@ const dagger = {
     imageUrl: "images/dagger.png",
 }
 
+//Bean's secret weapon.
 const specialBeanCannon = {
     type: "Special-Bean-Cannon",
     damage: 10,
-    imageUrl: "images/beamcannong.png",
+    imageUrl: "images/beamcannon.png",
 }
 
 //Makes it so the game doesn't start running on pageload.
@@ -98,8 +99,13 @@ function rest(hObj) {
 function pickUpItem(hObj, weapon) {
     hObj.inventory.push(weapon);
     displayHeroStats(hero);
-    const dagger = document.getElementById('dagger');
-    dagger.remove();
+    if(weapon === dagger) {
+        const dagger = document.getElementById('dagger');
+        dagger.remove();
+    } else if(weapon === specialBeanCannon) {
+        const cannon = document.getElementById('cannon');
+        cannon.remove();
+    }
 }
 
 //takes the item at index 0 of the hero's inventory and equips it as a weapon.
@@ -257,6 +263,11 @@ function heroDies() {
     deadText.id = "deadText"
     deadText.innerText = "DEAD"
     heroStats.appendChild(deadText);
+
+    setTimeout(() => {
+        alert("The hero perished :(. But do try again.")
+        location.reload(true);
+    }, 1000)    
 }
 
 //Changes the hero's avatar based on the outcome of the battle.
@@ -284,15 +295,18 @@ function startGame() {
     }
 }
 
+//Changes the enemy variable. No time to make this more elegant :(
 function getEnemy(enemiesData) {
     if(enemiesData[0]) {
         const enemy = enemiesData[0];
         return enemy;
     } else {
-        return alert("Out of enemies");
+        alert("You won! What a hero you are!");
+        location.reload(true);
     }
 }
 
+//Makes everything ready for the next fight.
 function setNewEnemy() {
     enemies.shift();
     enemy = getEnemy(enemies);
@@ -300,6 +314,16 @@ function setNewEnemy() {
     enemyAvatar = document.getElementById('enemyAvatar');
     enemyAvatar.src = enemy.img;
     displayEnemyStats(enemy);
+
+    if(enemy.name === "World-eater") {
+        const container = document.getElementById('container');
+        const cannon = document.createElement('img');
+        cannon.src = specialBeanCannon.imageUrl;
+        cannon.setAttribute("onClick", "pickUpItem(hero, specialBeanCannon)");
+        cannon.id = "cannon";
+
+        container.appendChild(cannon);
+    }
 }
 
 //initializes some stats.
