@@ -52,6 +52,10 @@ function displayHeroStats(hObj) {
 
     const stats = document.getElementById('heroStats');
 
+    const heroName = document.createElement('li')
+    heroName.innerText = "Name: " + name;
+    stats.appendChild(heroName);
+
     const damage = document.createElement('li')
     damage.innerText = "Damage: " + weaponDamage;
     stats.appendChild(damage);
@@ -59,10 +63,6 @@ function displayHeroStats(hObj) {
     const weapon = document.createElement('li')
     weapon.innerText = "Weapon: " + weaponType;
     stats.appendChild(weapon);
-
-    const heroName = document.createElement('li')
-    heroName.innerText = "Name: " + name;
-    stats.appendChild(heroName);
 
     const heroHealth = document.createElement('li')
     heroHealth.innerText = "Health: " + health;
@@ -78,6 +78,10 @@ function displayEnemyStats(eObj) {
 
     const stats = document.getElementById('enemyStats');
 
+    const heroName = document.createElement('li')
+    heroName.innerText = "Name: " + name;
+    stats.appendChild(heroName);
+
     const damage = document.createElement('li')
     damage.innerText = "Damage: " + weaponDamage;
     stats.appendChild(damage);
@@ -86,15 +90,22 @@ function displayEnemyStats(eObj) {
     weapon.innerText = "Weapon: " + weaponType;
     stats.appendChild(weapon);
 
-    const heroName = document.createElement('li')
-    heroName.innerText = "Name: " + name;
-    stats.appendChild(heroName);
-
     const heroHealth = document.createElement('li')
     heroHealth.innerText = "Health: " + health;
     stats.appendChild(heroHealth);
 
 }
 
+function changeHeroName(hObj) {
+    const input = document.getElementById('input');
+    const inputValue = input.value;
+
+    hObj.name = inputValue;
+
+    displayHeroStats(hero);
+}
+
+
+
 displayEnemyStats(enemy);
-displayHeroStats(hero)
+displayHeroStats(hero);

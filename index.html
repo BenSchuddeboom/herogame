@@ -28,7 +28,6 @@
   <div class="enemy">
     <h2>ENEMY</h2>
     <ul id ="enemyStats">
-
     </ul>
     <div class="healthbar">
       <div class="enemyHealth">
@@ -38,6 +37,12 @@
   </div>
   <!-- <img id="dagger" onclick="pickUpItem(hero, dagger)" src="images/dagger.png"> -->
 </div>
+
+<form id="nameChange">
+  Rename your hero: <br>
+  <input type="text" id="input">
+  <button id="submitName" onclick="changeHeroName(hero); return false">Submit</button>
+</form>
 
 
 
