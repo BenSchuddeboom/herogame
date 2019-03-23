@@ -18,7 +18,7 @@ const enemy = {
         current: 30,
     },
     weapon: {
-        type: "breath",
+        type: "Breath",
         damage: 3,
     },
 }
