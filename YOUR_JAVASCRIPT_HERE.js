@@ -33,13 +33,19 @@ const dagger = {
 }
 
 function rest(hObj) {
-    if(hObj.health >= 10) {
-        alert("Your hero is already fully rested!")
+    if(hObj.alive && !enemy.alive) {
+        if(hObj.health >= 10) {
+            alert("Your hero is already fully rested!")
+        } else {
+            hObj.health = 10;
+        }
+        displayHeroStats(hero);
+        return hObj;
+    } else if (enemy.alive) {
+        alert("No resting while fighting!")
     } else {
-        hObj.health = 10;
+        alert("No rest for the dead!");
     }
-    displayHeroStats(hero);
-    return hObj;
 }
 
 function pickUpItem(hObj, weapon) {
@@ -125,6 +131,8 @@ function doDamage(target, dealer) {
 function enemyDies() {
     window.clearInterval();
     removeEnemyStats();
+    changeHeroFace("won");
+
     const enemyStats = document.getElementById('enemyStats');
     const deadText = document.createElement('li');
     deadText.id = "deadText"
@@ -171,7 +179,9 @@ function enemyDamage(eObj) {
 
 function heroDies() {
     window.clearInterval();
-    removeHeroStats() 
+    removeHeroStats()
+    changeHeroFace("lost");
+
     const heroStats = document.getElementById('heroStats');
     const deadText = document.createElement('li');
     deadText.id = "deadText"
@@ -179,10 +189,14 @@ function heroDies() {
     heroStats.appendChild(deadText);
 }
 
-displayEnemyStats(enemy);
-displayHeroStats(hero);
-
-let running = false;
+function changeHeroFace(wonLost) {
+    const avatar = document.getElementById('heroAvatar');
+    if (wonLost === "won") {
+        avatar.src = "images/herofaces/beanwins.jpg"
+    } else if(wonLost === "lost") {
+        avatar.src = "images/herofaces/beandead.jpg"
+    }
+}
 
 function startGame() {
     if(!running) {
@@ -195,4 +209,10 @@ function startGame() {
         alert("game already running")
     }
 }
+
+displayEnemyStats(enemy);
+displayHeroStats(hero);
+
+let running = false;
+
 
