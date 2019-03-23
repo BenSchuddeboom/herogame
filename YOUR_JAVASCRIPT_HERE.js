@@ -14,8 +14,8 @@ const enemy = {
     name: "Dragon",
     inventory: [],
     health: {
-        max: 15,
-        current: 10,
+        max: 30,
+        current: 30,
     },
     weapon: {
         type: "breath",
@@ -100,6 +100,14 @@ function changeHeroName(hObj) {
 
     hObj.name = inputValue;
 
+    displayHeroStats(hero);
+}
+
+function doDamage(target, dealer) {
+    if(target.health.current > 0) {   
+        target.health.current = target.health.current - dealer.weapon.damage;
+    }
+    displayEnemyStats(enemy);
     displayHeroStats(hero);
 }
 
