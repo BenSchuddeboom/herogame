@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+body {
+    font-family: 'Germania One', cursive;
+}
+
 #hero {
     position: absolute;
     left: 0;
@@ -98,4 +102,9 @@ form {
     background: #666;
     background: url("images/bg1.png") no-repeat center center;
     z-index: 0;
+}
+
+#deadText {
+    color: rebeccapurple;
+    font-size: 200%;
 }
