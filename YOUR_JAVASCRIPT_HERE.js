@@ -5,7 +5,7 @@ const hero = {
     inventory: [],
     health: 10,
     weapon: {
-        type: "sword",
+        type: "Teddy",
         damage: 2,
     }
 }
@@ -13,7 +13,10 @@ const hero = {
 const enemy = {
     name: "Dragon",
     inventory: [],
-    health: 20,
+    health: {
+        max: 15,
+        current: 10,
+    },
     weapon: {
         type: "breath",
         damage: 3,
@@ -31,17 +34,20 @@ function rest(hObj) {
     } else {
         hObj.health = 10;
     }
+    displayHeroStats(hero);
     return hObj;
 }
 
 function pickUpItem(hObj, weapon) {
     hObj.inventory.push(weapon);
+    displayHeroStats(hero);
 }
 
 function equipWeapon(hObj) {
     if(hObj.inventory[0]) {
         hObj.weapon = hObj.inventory[0];
     }
+    displayHeroStats(hero);
 }
 
 function displayHeroStats(hObj) {
@@ -50,49 +56,41 @@ function displayHeroStats(hObj) {
     const name = hObj.name;
     const health = hObj.health;
 
-    const stats = document.getElementById('heroStats');
+    const weaponLi = document.getElementById('heroWeapon');
+    const damageLi = document.getElementById('heroDamage');
+    const nameLi = document.getElementById('heroName');
+    const healthLi = document.getElementById('heroHealth');
 
-    const heroName = document.createElement('li')
-    heroName.innerText = "Name: " + name;
-    stats.appendChild(heroName);
+    weaponLi.innerText = "Weapon: " + weaponType;
+    damageLi.innerText = "Damage: " + weaponDamage;
+    nameLi.innerText = "Name: " + name;
+    healthLi.innerText = "Health: " + health;
 
-    const damage = document.createElement('li')
-    damage.innerText = "Damage: " + weaponDamage;
-    stats.appendChild(damage);
-
-    const weapon = document.createElement('li')
-    weapon.innerText = "Weapon: " + weaponType;
-    stats.appendChild(weapon);
-
-    const heroHealth = document.createElement('li')
-    heroHealth.innerText = "Health: " + health;
-    stats.appendChild(heroHealth);
-
+    const healthbar = document.querySelector('.heroHealth');
+    currentHealthPerc = (health/10)*100;
+    healthbar.style = "width: " + currentHealthPerc + "%;";
 }
 
 function displayEnemyStats(eObj) {
     const weaponType = eObj.weapon.type;
     const weaponDamage = eObj.weapon.damage;
     const name = eObj.name;
-    const health = eObj.health;
+    const health = eObj.health.current;
+    const healthMax = eObj.health.max;
 
-    const stats = document.getElementById('enemyStats');
+    const weaponLi = document.getElementById('enemyWeapon');
+    const damageLi = document.getElementById('enemyDamage');
+    const nameLi = document.getElementById('enemyName');
+    const healthLi = document.getElementById('enemyHealth');
 
-    const heroName = document.createElement('li')
-    heroName.innerText = "Name: " + name;
-    stats.appendChild(heroName);
+    weaponLi.innerText = "Weapon: " + weaponType;
+    damageLi.innerText = "Damage: " + weaponDamage;
+    nameLi.innerText = "Name: " + name;
+    healthLi.innerText = "Health: " + health;
 
-    const damage = document.createElement('li')
-    damage.innerText = "Damage: " + weaponDamage;
-    stats.appendChild(damage);
-
-    const weapon = document.createElement('li')
-    weapon.innerText = "Weapon: " + weaponType;
-    stats.appendChild(weapon);
-
-    const heroHealth = document.createElement('li')
-    heroHealth.innerText = "Health: " + health;
-    stats.appendChild(heroHealth);
+    const healthbar = document.querySelector('.enemyHealth');
+    currentHealthPerc = (health/healthMax)*100;
+    healthbar.style = "width: " + currentHealthPerc + "%;";
 
 }
 
